@@ -65,10 +65,10 @@ PrefabInstance:
       addedObject: {fileID: 3231595937345275047}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bc95c14eede8e9748811cbd4a0ef1d3d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -1462493362032361289}
+      addedObject: {fileID: -6030389533682215514}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bc95c14eede8e9748811cbd4a0ef1d3d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 901348555762403111}
+      addedObject: {fileID: 1355870910584957948}
   m_SourcePrefab: {fileID: 100100000, guid: bc95c14eede8e9748811cbd4a0ef1d3d, type: 3}
 --- !u!1 &3011894311953426603 stripped
 GameObject:
@@ -97,7 +97,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1720110463813443401, guid: bc95c14eede8e9748811cbd4a0ef1d3d, type: 3}
---- !u!114 &-1462493362032361289
+--- !u!114 &-6030389533682215514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,23 +106,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3011894311953426603}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0eef9cf6b1dd840739c402103028d770, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TowerStats
-  maxHp: 4000
-  armor: 110
-  regen: 35
-  attackSpeed: 1
---- !u!114 &901348555762403111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3011894311953426603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d2d4b17484554f73b89ccf0903928f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fcd786381c64f6da1ae914eddebb3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopUI
   contentRoot: {fileID: 0}
@@ -131,3 +115,19 @@ MonoBehaviour:
   timerText: {fileID: 0}
   statusText: {fileID: 0}
   shopManager: {fileID: 0}
+--- !u!114 &1355870910584957948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3011894311953426603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15956fd25e6b405eb6d871664c464e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerStats
+  maxHp: 1500
+  armor: 0
+  regen: 0
+  attackSpeed: 1
