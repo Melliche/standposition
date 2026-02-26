@@ -3,27 +3,29 @@ using UnityEngine.Serialization;
 
 public class TowerStats : MonoBehaviour
 {
-    [FormerlySerializedAs("damage")] [Header("Primary Stats")] [SerializeField]
-    private int maxHp = 1500;
-
-    [SerializeField] private int armor = 0;
-    [SerializeField] private int regen = 0;
-    [SerializeField] private float attackSpeed = 1f;
-
-    public int MaxHp => maxHp;
-    public int Armor => armor;
-    public int Regen => regen;
-    public float AttackSpeed => attackSpeed;
+    [FormerlySerializedAs("damage")] [Header("Primary Stats")] 
+    
+    [SerializeField] private int maxHp;
+    [SerializeField] private int armor;
+    [SerializeField] private int regen;
+    [SerializeField] private float attackSpeed;
+    [SerializeField] private TowerMainStatsUI towerMainStatsUI;
 
     public int CurrentHp { get; private set; }
+    public int CurrentMaxHp { get; private set; }
+    public int CurrentArmor { get; private set; }
+    public int CurrentRegen { get; private set; }
+    public float CurrentAttackSpeed { get; private set; }
 
-    private void Awake()
+    
+    protected void Start()
     {
-        CurrentHp = maxHp - 1000;
-    }
-
-    void Start()
-    {
+        CurrentHp = 1500;
+        CurrentMaxHp = maxHp;
+        Debug.Log($"[TowerStats] Current MaxHp: {CurrentMaxHp}, maxhp : {maxHp}", this);
+        CurrentArmor = armor;
+        CurrentRegen = regen;
+        CurrentAttackSpeed = attackSpeed;
         InvokeRepeating(nameof(RegenHp), 0, 1);
     }
 
@@ -32,31 +34,54 @@ public class TowerStats : MonoBehaviour
      */
     private void RegenHp()
     {
-        if (regen > 0 && CurrentHp < maxHp)
+        // Debug.Log("CurrentHP  avant regen" + CurrentHp);
+
+        if (CurrentRegen > 0 && CurrentHp < CurrentMaxHp)
         {
-            CurrentHp += regen;
-            if (CurrentHp > maxHp)
-                CurrentHp = maxHp;
+            CurrentHp += CurrentRegen;
+            if (CurrentHp > CurrentMaxHp)
+                CurrentHp = CurrentMaxHp;
         }
+
+        // Debug.Log("CurrentHP  apres regen" + CurrentHp);
+
+        UpdateMainStatsUI();
     }
-    
+
     public void AddMaxHp(int amount)
     {
-        maxHp += amount;
+        Debug.Log($"[TowerStats] AddMaxHp sur {name} (+{amount}) | avant={CurrentMaxHp}", this);
+
+        // Debug.Log(" CurrentMaxHp avant up : " + CurrentMaxHp + " | amount : " + amount);
+        CurrentMaxHp = this.CurrentMaxHp + amount;
+        Debug.Log($"[TowerStats] après={CurrentMaxHp}", this);
+        UpdateMainStatsUI();
     }
-    
-    public void AddRegen(int amount) 
+
+    public void AddRegen(int amount)
     {
-        regen += amount;
+        CurrentRegen += amount;
+        UpdateMainStatsUI();
     }
-    
-    public void AddArmor(int amount) 
+
+    public void AddArmor(int amount)
     {
-        armor += amount;
+        CurrentArmor += amount;
+        UpdateMainStatsUI();
     }
-    
-    public void MultiplyAttackSpeed(float multiplier) 
+
+    public void MultiplyAttackSpeed(float multiplier)
     {
-        attackSpeed = this.attackSpeed * multiplier ;
+        CurrentAttackSpeed *= multiplier;
+    }
+
+    private void UpdateMainStatsUI()
+    {
+        if (towerMainStatsUI != null)
+        {
+            // Debug.Log("CurrentMaxHP update ui" + CurrentMaxHp);
+            // Debug.Log(CurrentHp + " | " + CurrentMaxHp + " | " + CurrentArmor + " | " + CurrentRegen);
+            towerMainStatsUI.SetData(CurrentHp, CurrentArmor, CurrentRegen);
+        }
     }
 }

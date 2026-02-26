@@ -11,21 +11,20 @@ public class ShopItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private ItemDetailUI itemDetail;
     private ShopItem shopItem;
 
-    public void Awake()
+    protected void Start()
     {
-        itemDetail = GameObject.Find("ItemDetailModale")
-            .GetComponent<ItemDetailUI>();
+        if (itemDetail != null)
+        {
+            itemDetail.gameObject.SetActive(false);
+        }
     }
 
-    public void Bind(ShopItem item, System.Action onBuy)
+    public void Bind(ShopItem item, System.Action onBuy, ItemDetailUI itemDetailGO)
     {
         // Bind image
         shopItem = item;
         image.color = new Color(Random.value, Random.value, Random.value);
-        // titleText.text = item.name;
-        // descText.text = item.description;
-        // costText.text = $"{item.cost} or";
-
+        itemDetail = itemDetailGO;
         buyButton.onClick.RemoveAllListeners();
         buyButton.onClick.AddListener(() => onBuy?.Invoke());
     }
@@ -33,12 +32,23 @@ public class ShopItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        itemDetail.SetData(shopItem);
-        itemDetail.gameObject.SetActive(true);
+        if (itemDetail != null && shopItem != null)
+        {
+            itemDetail.SetData(shopItem);
+            itemDetail.gameObject.SetActive(true);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        itemDetail.gameObject.SetActive(false);
+        if (itemDetail != null)
+        {
+            itemDetail.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        itemDetail?.gameObject.SetActive(false);
     }
 }

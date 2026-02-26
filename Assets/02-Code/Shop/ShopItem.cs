@@ -5,7 +5,8 @@ public enum UpgradeType
     MaxHp,
     Armor,
     Regen,
-    AttackSpeed
+    AttackSpeed,
+    Income
 }
 
 public class ShopItem

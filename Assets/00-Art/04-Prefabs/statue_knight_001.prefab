@@ -115,6 +115,9 @@ MonoBehaviour:
   timerText: {fileID: 0}
   statusText: {fileID: 0}
   shopManager: {fileID: 0}
+  emptySlotPrefab: {fileID: 0}
+  itemDetailGO: {fileID: 0}
+  visibleCount: 8
 --- !u!114 &1355870910584957948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,12 +125,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3011894311953426603}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15956fd25e6b405eb6d871664c464e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerStats
-  maxHp: 1500
-  armor: 0
-  regen: 0
-  attackSpeed: 1
+  maxHp: 33500
+  armor: 380
+  regen: 255
+  attackSpeed: 3.3547506
+  towerMainStatsUI: {fileID: 0}

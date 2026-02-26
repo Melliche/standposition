@@ -1,11 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ShopManager : MonoBehaviour
 {
-    [Header("Références")]
-    [SerializeField] private TowerStats tower;
+    [Header("Références")] [SerializeField]
+    private TowerStats tower;
+
     [SerializeField] private Economy economy;
     [SerializeField] private ShopUI shopUI;
 
@@ -17,10 +20,10 @@ public class ShopManager : MonoBehaviour
     private List<ShopItem> shopItems;
     private List<ShopItem> visibleShopItems;
 
-    private void Awake()
+    private void Start()
     {
+        shopUI.UpdateHeader(economy.Gold, refreshSeconds);
         shopItems = BuildMarket();
-
         RollNewItems();
         InvokeRepeating(nameof(RollNewItems), refreshSeconds, refreshSeconds);
     }
@@ -36,13 +39,18 @@ public class ShopManager : MonoBehaviour
         if (item != null && economy.Pay(item.cost))
         {
             ApplyUpgrade(item);
+
+            visibleShopItems.Remove(item);
             shopUI.SetStatus($"Vous avez acheté: {item.name}");
-            shopUI.Display(visibleShopItems, economy.Gold, refreshSeconds);
+            shopUI.RemoveItem(item);
+            shopUI.UpdateHeader(economy.Gold, refreshSeconds);
+
+            // shopUI.Display(visibleShopItems, economy.Gold, refreshSeconds, item);
         }
         else
         {
             shopUI.SetStatus($"Pas assez d'or");
-            shopUI.Display(visibleShopItems, economy.Gold, refreshSeconds);
+            shopUI.UpdateHeader(economy.Gold, refreshSeconds);
         }
     }
 
@@ -62,10 +70,14 @@ public class ShopManager : MonoBehaviour
             case UpgradeType.AttackSpeed:
                 tower.MultiplyAttackSpeed(item.floatValue);
                 break;
+            case UpgradeType.Income:
+                economy.PassiveIncome = economy.PassiveIncome + item.intValue;
+                break;
         }
 
-        Debug.Log("Armure: " + tower.Armor + " | Max HP: " + tower.MaxHp + " | Regen: " + tower.Regen +
-                  " | Attack Speed: " + tower.AttackSpeed);
+        // Debug.Log("Armure: " + tower.CurrentArmor + " | Max HP: " + tower.CurrentMaxHp + " | Regen: " +
+        //           tower.CurrentRegen +
+        //           " | Attack Speed: " + tower.CurrentAttackSpeed);
     }
 
     private List<ShopItem> BuildMarket()
@@ -131,6 +143,23 @@ public class ShopManager : MonoBehaviour
             {
                 name = "Upgrade Attack Speed", description = "Augmente la vitesse d'attaque de la tour de 2.",
                 cost = 1000, upgradeType = UpgradeType.AttackSpeed, floatValue = 1.20f
+            },
+            new ShopItem
+            {
+                name = "Upgrade Income", description = "Augmente les revenus passifs de 50 or par seconde.", cost = 300,
+                upgradeType = UpgradeType.Income, intValue = 50
+            },
+            new ShopItem
+            {
+                name = "Upgrade Income", description = "Augmente les revenus passifs de 100 or par seconde.",
+                cost = 600,
+                upgradeType = UpgradeType.Income, intValue = 100
+            },
+            new ShopItem
+            {
+                name = "Upgrade Income", description = "Augmente les revenus passifs de 200 or par seconde.",
+                cost = 1200,
+                upgradeType = UpgradeType.Income, intValue = 200
             }
         };
     }
