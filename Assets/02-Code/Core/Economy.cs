@@ -42,7 +42,7 @@ public class Economy : MonoBehaviour
         if (PassiveIncome > 0)
         {
             AddGold(PassiveIncome);
-            shopUI.UpdateHeader(Gold, 0);
+            shopUI.UpdateHeader(Gold);
         }
     }
 }

@@ -22,7 +22,7 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
-        shopUI.UpdateHeader(economy.Gold, refreshSeconds);
+        shopUI.UpdateHeader(economy.Gold);
         shopItems = BuildMarket();
         RollNewItems();
         InvokeRepeating(nameof(RollNewItems), refreshSeconds, refreshSeconds);
@@ -41,17 +41,10 @@ public class ShopManager : MonoBehaviour
             ApplyUpgrade(item);
 
             visibleShopItems.Remove(item);
-            shopUI.SetStatus($"Vous avez acheté: {item.name}");
             shopUI.RemoveItem(item);
-            shopUI.UpdateHeader(economy.Gold, refreshSeconds);
+        }
 
-            // shopUI.Display(visibleShopItems, economy.Gold, refreshSeconds, item);
-        }
-        else
-        {
-            shopUI.SetStatus($"Pas assez d'or");
-            shopUI.UpdateHeader(economy.Gold, refreshSeconds);
-        }
+        shopUI.UpdateHeader(economy.Gold);
     }
 
     private void ApplyUpgrade(ShopItem item)
@@ -74,10 +67,6 @@ public class ShopManager : MonoBehaviour
                 economy.PassiveIncome = economy.PassiveIncome + item.intValue;
                 break;
         }
-
-        // Debug.Log("Armure: " + tower.CurrentArmor + " | Max HP: " + tower.CurrentMaxHp + " | Regen: " +
-        //           tower.CurrentRegen +
-        //           " | Attack Speed: " + tower.CurrentAttackSpeed);
     }
 
     private List<ShopItem> BuildMarket()

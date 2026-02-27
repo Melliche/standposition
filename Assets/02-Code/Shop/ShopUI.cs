@@ -5,20 +5,16 @@ using UnityEngine;
 
 public class ShopUI : MonoBehaviour
 {
-    [Header("UI Refs")] [SerializeField] private Transform contentRoot;
-    [SerializeField] private ShopItemButton itemButtonPrefab;
-    [SerializeField] private TMP_Text goldText;
-    [SerializeField] private TMP_Text timerText;
-    [SerializeField] private TMP_Text statusText;
-    [SerializeField] private ShopManager shopManager;
-    [SerializeField] private GameObject emptySlotPrefab;
-    [SerializeField] private ItemDetailUI itemDetailGO;
-    
+    [Header("UI Refs")] public Transform contentRoot;
+    public ShopItemButton itemButtonPrefab;
+    public TMP_Text goldText;
+    public ShopManager shopManager;
+    public GameObject emptySlotPrefab;
+    public ItemDetailUI itemDetailModaUi;
+
     public int visibleCount = 8;
-    // private readonly List<ShopItemButton> itemsPurchasable = new();
-    private readonly List<Transform> slots = new();
     private readonly Dictionary<ShopItem, ShopItemButton> buttonsByItem = new();
-    
+
     /**
      * Affiche les items disponibles à l'achat, le montant d'or du joueur et le timer de rafraîchissement du shop
      * @param items Les items à afficher
@@ -27,8 +23,7 @@ public class ShopUI : MonoBehaviour
      */
     public void Display(List<ShopItem> items, int gold, float timer)
     {
-        UpdateHeader(gold, timer);
-        SetStatus("");
+        UpdateHeader(gold);
 
         ClearAllCells();
 
@@ -38,10 +33,10 @@ public class ShopUI : MonoBehaviour
         {
             if (i < items.Count)
             {
-                var it = items[i];
-                var btn = Instantiate(itemButtonPrefab, contentRoot); // enfant direct du grid
-                btn.Bind(it, onBuy: () => shopManager.BuyItem(it), itemDetailGO);
-                buttonsByItem[it] = btn;
+                ShopItem item = items[i];
+                ShopItemButton btn = Instantiate(itemButtonPrefab, contentRoot);
+                btn.Bind(item, onBuy: () => shopManager.BuyItem(item), itemDetailModaUi);
+                buttonsByItem[item] = btn;
             }
             else
             {
@@ -55,13 +50,12 @@ public class ShopUI : MonoBehaviour
         for (int i = contentRoot.childCount - 1; i >= 0; i--)
             Destroy(contentRoot.GetChild(i).gameObject);
     }
-    
-    public void UpdateHeader(int gold, float timer)
+
+    public void UpdateHeader(int gold)
     {
         if (goldText != null) goldText.text = $"Or: {gold}";
-        if (timerText != null) timerText.text = $"Refresh: {Mathf.CeilToInt(timer)}s";
     }
-    
+
     public void RemoveItem(ShopItem item)
     {
         if (item == null) return;
@@ -73,10 +67,5 @@ public class ShopUI : MonoBehaviour
 
         var empty = Instantiate(emptySlotPrefab, contentRoot);
         empty.transform.SetSiblingIndex(index);
-    }
-
-    public void SetStatus(string msg)
-    {
-        if (statusText != null) statusText.text = msg;
     }
 }

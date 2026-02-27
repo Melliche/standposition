@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc95c14eede8e9748811cbd4a0ef1d3d, type: 3}
       propertyPath: m_Name
-      value: statue_knight_001
+      value: Tower
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3011894311953426603}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fcd786381c64f6da1ae914eddebb3f8, type: 3}
   m_Name: 
@@ -130,8 +130,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15956fd25e6b405eb6d871664c464e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerStats
-  maxHp: 33500
-  armor: 380
-  regen: 255
-  attackSpeed: 3.3547506
+  maxHp: 9000
+  hp: 0
+  armor: 240
+  regen: 60
+  attackSpeed: 1.8336779
   towerMainStatsUI: {fileID: 0}

@@ -21,7 +21,6 @@ public class ShopItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void Bind(ShopItem item, System.Action onBuy, ItemDetailUI itemDetailGO)
     {
-        // Bind image
         shopItem = item;
         image.color = new Color(Random.value, Random.value, Random.value);
         itemDetail = itemDetailGO;
