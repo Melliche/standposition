@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class TowerStats : MonoBehaviour
 {
-    [Header("Primary Stats")]
-    public int maxHp;
-    public int hp;
-    public int armor;
-    public int regen;
-    public float attackSpeed;
+    [SerializeField] private int maxHp;
+    [SerializeField] private int hp;
+    [SerializeField] private int armor;
+    [SerializeField] private int regen;
+    [SerializeField] private float attackSpeed;
     [SerializeField] private TowerMainStatsUI towerMainStatsUI;
 
     protected void Start()
@@ -15,9 +14,9 @@ public class TowerStats : MonoBehaviour
         InvokeRepeating(nameof(RegenHp), 0, 1);
     }
 
-    /**
-     * Régnère les points de vie de la tour avec les points de régénération définis, jusqu'à atteindre le maximum de points de vie.
-     */
+    /// <summary>
+    /// Régnère les points de vie de la tour avec les points de régénération définis, jusqu'à atteindre le maximum de points de vie.
+    /// </summary>
     private void RegenHp()
     {
         if (regen > 0 && hp < maxHp)
@@ -57,7 +56,7 @@ public class TowerStats : MonoBehaviour
 
     private void UpdateMainStatsUI()
     {
-        if (towerMainStatsUI != null)
+        if (towerMainStatsUI)
         {
             towerMainStatsUI.SetData(hp, maxHp, armor, regen);
         }

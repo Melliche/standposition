@@ -5,11 +5,10 @@ using Random = UnityEngine.Random;
 
 public class ShopItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [Header("UI")] [SerializeField] private Image image;
-
+    [SerializeField] private Image image;
     [SerializeField] private Button buyButton;
-    private ItemDetailUI itemDetail;
-    private ShopItem shopItem;
+    [SerializeField] private ItemDetailUI itemDetail;
+    [SerializeField] private ShopItem shopItem;
 
     protected void Start()
     {

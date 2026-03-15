@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,34 +5,56 @@ using Random = UnityEngine.Random;
 
 public class ShopManager : MonoBehaviour
 {
-    [Header("Références")] [SerializeField]
-    private TowerStats tower;
-
+    [SerializeField] private TowerStats tower;
     [SerializeField] private Economy economy;
     [SerializeField] private ShopUI shopUI;
-
-    [Header("Shop Items")] [SerializeField]
-    public int visibleCount = 8;
-
-    [SerializeField] public int refreshSeconds = 30;
+    [SerializeField] private int visibleCount = 8;
+    [SerializeField] private int refreshSeconds = 30;
 
     private List<ShopItem> shopItems;
     private List<ShopItem> visibleShopItems;
+    private float refreshTimer;
 
     private void Start()
     {
         shopUI.UpdateHeader(economy.Gold);
         shopItems = BuildMarket();
         RollNewItems();
-        InvokeRepeating(nameof(RollNewItems), refreshSeconds, refreshSeconds);
+
+        // Initialise le timer de rafraîchissement du shop et met à jour l'UI pour afficher le timer complet
+        refreshTimer = refreshSeconds;
+        shopUI.UpdateRefreshProgress(1f);
     }
 
-    private void RollNewItems()
+    private void Update()
+    {
+        refreshTimer -= Time.deltaTime;
+
+        float normalizedProgress = refreshTimer / refreshSeconds;
+        shopUI.UpdateRefreshProgress(normalizedProgress);
+
+        if (refreshTimer <= 0f)
+        {
+            RollNewItems();
+            refreshTimer = refreshSeconds;
+            shopUI.UpdateRefreshProgress(1f);
+        }
+    }
+
+    /// <summary>
+    /// Génère une nouvelle liste d'upgrades achetables.
+    /// Met ensuite à jour l'UI du shop
+    /// </summary>
+    public void RollNewItems()
     {
         visibleShopItems = shopItems.OrderBy(i => Random.value).Take(visibleCount).ToList();
         shopUI.Display(visibleShopItems, economy.Gold, refreshSeconds);
     }
 
+    /// <summary>
+    /// Tente d'acheter l'item spécifié. Si le paiement est réussi, applique l'upgrade à la tour, retire l'item de la liste des items visibles et met à jour l'UI du shop.
+    /// </summary>
+    /// <param name="item">L'item à acheter</param>
     public void BuyItem(ShopItem item)
     {
         if (item != null && economy.Pay(item.cost))
@@ -47,6 +68,10 @@ public class ShopManager : MonoBehaviour
         shopUI.UpdateHeader(economy.Gold);
     }
 
+    /// <summary>
+    /// Applique l'upgrade de l'item acheté à la tour ou à l'économie du joueur en fonction du type d'upgrade de l'item.
+    /// </summary>
+    /// <param name="item">L'item qui vient d'être débloqué</param>
     private void ApplyUpgrade(ShopItem item)
     {
         switch (item.upgradeType)
@@ -64,11 +89,12 @@ public class ShopManager : MonoBehaviour
                 tower.MultiplyAttackSpeed(item.floatValue);
                 break;
             case UpgradeType.Income:
-                economy.PassiveIncome = economy.PassiveIncome + item.intValue;
+                economy.PassiveIncome += item.intValue;
                 break;
         }
     }
 
+    // TODO Adapter avec mécanique unity pour données statiques (ScriptableObject ?)
     private List<ShopItem> BuildMarket()
     {
         return new List<ShopItem>()

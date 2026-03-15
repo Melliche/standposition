@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class Economy : MonoBehaviour
 {
-    
     [SerializeField] private int startingGold = 5000;
     [SerializeField] private ShopUI shopUI;
-    
+
     public int Gold { get; private set; }
     public int PassiveIncome { get; set; } = 0;
     public int KillIncome { get; private set; } = 0;
-    
+
     void Awake()
     {
         Gold = startingGold;
@@ -19,8 +18,13 @@ public class Economy : MonoBehaviour
     {
         InvokeRepeating(nameof(GeneratePassiveIncome), 1f, 1f);
     }
-    
 
+
+    /// <summary>
+    /// Tente de payer le montant spécifié. Déduit le montant de l'or du joueur si le paiement est réussi.
+    /// </summary>
+    /// <param name="amout">Le montant à payer</param>
+    /// <returns>True si le paiement s'est bien exécuté, false sinon</returns>
     public bool Pay(int amout)
     {
         if (Gold >= amout)
@@ -32,11 +36,18 @@ public class Economy : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Ajoute le montant spécifié à l'or du joueur. Utilisé pour les revenus passifs et les récompenses de kill.
+    /// </summary>
+    /// <param name="amout">Le montant d'or à ajouter</param>
     public void AddGold(int amout)
     {
         Gold += amout;
     }
-    
+
+    /// <summary>
+    /// Génère le revenu passif du joueur.
+    /// </summary>
     private void GeneratePassiveIncome()
     {
         if (PassiveIncome > 0)
