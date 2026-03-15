@@ -116,7 +116,7 @@ public class ShopManager : MonoBehaviour
             },
             new ShopItem
             {
-                name = "Upgrade Attack Speed", description = "Augmente la vitesse d'attaque de la tour de 0.5.",
+                name = "Upgrade Attack Speed", description = "Augmente la vitesse d'attaque de la tour de  5 %",
                 cost = 250, upgradeType = UpgradeType.AttackSpeed, floatValue = 1.05f
             },
             new ShopItem
@@ -136,7 +136,7 @@ public class ShopManager : MonoBehaviour
             },
             new ShopItem
             {
-                name = "Upgrade Attack Speed", description = "Augmente la vitesse d'attaque de la tour de 1.",
+                name = "Upgrade Attack Speed", description = "Augmente la vitesse d'attaque de la tour de  10 %",
                 cost = 500, upgradeType = UpgradeType.AttackSpeed, floatValue = 1.10f
             },
             new ShopItem
@@ -156,7 +156,7 @@ public class ShopManager : MonoBehaviour
             },
             new ShopItem
             {
-                name = "Upgrade Attack Speed", description = "Augmente la vitesse d'attaque de la tour de 2.",
+                name = "Upgrade Attack Speed", description = "Augmente la vitesse d'attaque de la tour de 20 %",
                 cost = 1000, upgradeType = UpgradeType.AttackSpeed, floatValue = 1.20f
             },
             new ShopItem

@@ -81,7 +81,7 @@ public class ShopUI : MonoBehaviour
     public void RemoveItem(ShopItem item)
     {
         if (item == null) return;
-        if (!buttonsByItem.TryGetValue(item, out var btn) || btn == null) return;
+        if (!buttonsByItem.TryGetValue(item, out var btn) || !btn) return;
 
         int index = btn.transform.GetSiblingIndex();
         Destroy(btn.gameObject);

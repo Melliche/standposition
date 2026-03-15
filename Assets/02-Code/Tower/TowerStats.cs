@@ -52,13 +52,14 @@ public class TowerStats : MonoBehaviour
     public void MultiplyAttackSpeed(float multiplier)
     {
         attackSpeed *= multiplier;
+        UpdateMainStatsUI();
     }
 
     private void UpdateMainStatsUI()
     {
         if (towerMainStatsUI)
         {
-            towerMainStatsUI.SetData(hp, maxHp, armor, regen);
+            towerMainStatsUI.SetData(hp, maxHp, armor, regen, attackSpeed);
         }
     }
 }

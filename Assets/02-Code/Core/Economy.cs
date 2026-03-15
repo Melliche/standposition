@@ -6,7 +6,7 @@ public class Economy : MonoBehaviour
     [SerializeField] private ShopUI shopUI;
 
     public int Gold { get; private set; }
-    public int PassiveIncome { get; set; } = 0;
+    public int PassiveIncome { get; set; } = 10;
     public int KillIncome { get; private set; } = 0;
 
     void Awake()
