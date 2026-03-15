@@ -16,7 +16,7 @@ public class SpawnEnnemy : MonoBehaviour
         Debug.Log("Start");
         spawnPosition = GameObject.FindGameObjectsWithTag("Spawn");
         Debug.Log("Spawn number : " + spawnPosition.Length.ToString());
-        InvokeRepeating("SpawEnnemy", 0.5f, 0.3f);
+        InvokeRepeating("SpawEnnemy", 0.5f, 1f);
         Debug.Log("Start Method");
         Invoke("StopSpawn", 60.0f);
     }

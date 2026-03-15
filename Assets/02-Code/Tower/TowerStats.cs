@@ -62,4 +62,6 @@ public class TowerStats : MonoBehaviour
             towerMainStatsUI.SetData(hp, maxHp, armor, regen, attackSpeed);
         }
     }
+
+    
 }

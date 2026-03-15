@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class TestFixedMovement : MonoBehaviour
 {
@@ -9,13 +11,14 @@ public class TestFixedMovement : MonoBehaviour
     private NavMeshAgent agent;
     private bool aAttaque = false;
 
+    public UnityEvent onHitTower;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
 
         cible = GameObject.Find("Tower");
 
-        // 1. DÉBLOQUAGE FORCE : On s'assure que l'agent n'est pas en pause
         agent.isStopped = false; 
         
         MoveToPoint();
@@ -23,7 +26,6 @@ public class TestFixedMovement : MonoBehaviour
 
     void MoveToPoint()
     {
-        // On lance le déplacement
         bool pathFound = agent.SetDestination(cible.transform.position);
 
     }
@@ -36,14 +38,14 @@ public class TestFixedMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // 1. On vérifie si l'objet touché a le Tag "Tower"
         if (other.CompareTag("Tower"))
         {
             Debug.Log("J'attaque la tour !");
             
             GetComponent<UnityEngine.AI.NavMeshAgent>().isStopped = true;
             GetComponent<Animator>().SetBool("Attack", true);
-
+            aAttaque = true;
+            onHitTower?.Invoke();
         }
     }
 }
