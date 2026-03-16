@@ -81,6 +81,11 @@ public class TowerStats : MonoBehaviour
     {
         hp -= amount;
         Debug.Log("La tour a subi " + amount + " dégâts ! PV restants : " + hp);
+        hp -= amount;
+        if(hp <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
 
