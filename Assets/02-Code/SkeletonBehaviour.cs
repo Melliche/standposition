@@ -9,8 +9,10 @@ public class SkeletonBehaviour : MonoBehaviour
     private GameObject cible;
     private NavMeshAgent agent;
     private TowerStats towerStats;
-    public int CurrentHp;
-    public int damage;
+
+     public EnemyScriptableObject enemyScriptableObject;
+    public float hp;
+    public float damage;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -45,6 +47,13 @@ public class SkeletonBehaviour : MonoBehaviour
         }
     }
 
+    public void SetStats(WaveStatScritableObject stats)
+    {
+        hp *= stats.health;
+        damage *= stats.damage;
+        Debug.Log("HP : " + hp + " Damage : " + damage);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Tower"))
@@ -57,12 +66,12 @@ public class SkeletonBehaviour : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log("Before :" + CurrentHp);
-        CurrentHp -= damage;
-        Debug.Log("After :" + CurrentHp);
-        if(CurrentHp <= 0)
+        //Debug.Log("Before :" + hp);
+        hp -= damage;
+        //Debug.Log("After :" + hp);
+        if(hp <= 0)
         {
-            Debug.Log("Mort !!");
+            //Debug.Log("Mort !!");
             Destroy(this.gameObject);
         }
     }

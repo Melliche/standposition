@@ -36,7 +36,7 @@ public class Arrow : MonoBehaviour
 
     void HitTarget()
     {
-        Debug.Log("Boum ! Le projectile a touché " + target.name);
+        //Debug.Log("Boum ! Le projectile a touché " + target.name);
         
         target.GetComponent<SkeletonBehaviour>().TakeDamage(damage);
         

@@ -766,7 +766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf647191bbd6ff84dae3df4a7e82e297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animation
-  CurrentHp: 50
+  enemyScriptableObject: {fileID: 11400000, guid: 7ead63eff17364747bb8f9f81399ec05, type: 2}
+  hp: 10
   damage: 10
 --- !u!1 &165938
 GameObject:

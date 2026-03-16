@@ -266,9 +266,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a360aaaec878c245afb49211955b265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnEnnemy
-  parent: {fileID: 0}
-  ennemy: {fileID: 165424, guid: d20dce95ce87cb04383cb41773c16dd0, type: 3}
-  spawnPosition: []
+  waves:
+  - waveName: 1
+    enemies:
+    - enemyPrefab: {fileID: 165424, guid: d20dce95ce87cb04383cb41773c16dd0, type: 3}
+      enemyStats: {fileID: 11400000, guid: d62f3e61000e1fa43bfb23922a7a8885, type: 2}
+      count: 5
+    - enemyPrefab: {fileID: 7482216275468326518, guid: f97d9eb20ea9b2c4c9fdda57a67961e0, type: 3}
+      enemyStats: {fileID: 11400000, guid: d62f3e61000e1fa43bfb23922a7a8885, type: 2}
+      count: 1
+  - waveName: 2
+    enemies:
+    - enemyPrefab: {fileID: 165424, guid: d20dce95ce87cb04383cb41773c16dd0, type: 3}
+      enemyStats: {fileID: 0}
+      count: 10
+    - enemyPrefab: {fileID: 7482216275468326518, guid: f97d9eb20ea9b2c4c9fdda57a67961e0, type: 3}
+      enemyStats: {fileID: 0}
+      count: 3
 --- !u!1 &674250783
 GameObject:
   m_ObjectHideFlags: 0
