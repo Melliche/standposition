@@ -131,11 +131,10 @@ MonoBehaviour:
   contentRoot: {fileID: 0}
   itemButtonPrefab: {fileID: 0}
   goldText: {fileID: 0}
-  timerText: {fileID: 0}
-  statusText: {fileID: 0}
   shopManager: {fileID: 0}
   emptySlotPrefab: {fileID: 0}
-  itemDetailGO: {fileID: 0}
+  itemDetailModaUi: {fileID: 0}
+  refreshProgressFill: {fileID: 0}
   visibleCount: 8
 --- !u!114 &1355870910584957948
 MonoBehaviour:

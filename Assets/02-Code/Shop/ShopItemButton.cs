@@ -27,7 +27,7 @@ public class ShopItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void Bind(ShopItem item, System.Action onBuy, ItemDetailUI itemDetailGO)
     {
         shopItem = item;
-        image.color = GetColorFromUpgradeType(item.upgradeType);
+        image.color = GetColorFromUpgradeType(item);
         itemDetail = itemDetailGO;
         buyButton.onClick.RemoveAllListeners();
         buyButton.onClick.AddListener(() => onBuy?.Invoke());
@@ -36,20 +36,29 @@ public class ShopItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     /// <summary>
     /// Retourne une couleur spécifique pour chaque type d'upgrade, afin de différencier visuellement les items du shop.
     /// </summary>
-    /// <param name="type">Type de l'upgrade</param>
+    /// <param name="item">Item</param>
     /// <returns>Couleur</returns>
-    private static Color GetColorFromUpgradeType(UpgradeType type)
+    private static Color GetColorFromUpgradeType(ShopItem item)
     {
-        switch (type)
+        if (item.itemType == ShopItemType.StatUpgrade)
         {
-            case UpgradeType.MaxHp: return new Color(0.85f, 0.25f, 0.25f);
-            case UpgradeType.Armor: return new Color(0.35f, 0.55f, 0.85f);
-            case UpgradeType.Regen: return new Color(0.35f, 0.8f, 0.45f);
-            case UpgradeType.AttackSpeed: return new Color(0.65f, 0.35f, 0.9f);
-            case UpgradeType.Income: return new Color(1f, 0.75f, 0.2f);
-            case UpgradeType.Damage: return new Color(1f, 0.45f, 0.2f);
-            default: return new Color(0.8f, 0.8f, 0.8f);
+            switch (item.upgradeType)
+            {
+                case UpgradeType.MaxHp: return new Color(0.85f, 0.25f, 0.25f);
+                case UpgradeType.Armor: return new Color(0.35f, 0.55f, 0.85f);
+                case UpgradeType.Regen: return new Color(0.35f, 0.8f, 0.45f);
+                case UpgradeType.AttackSpeed: return new Color(0.65f, 0.35f, 0.9f);
+                case UpgradeType.Income: return new Color(1f, 0.75f, 0.2f);
+                case UpgradeType.Damage: return new Color(1f, 0.45f, 0.2f);
+            }
         }
+
+        if (item.itemType == ShopItemType.Weapon)
+        {
+            return new Color(0.6f, 0.4f, 0.2f);
+        }
+
+        return new Color(0.8f, 0.8f, 0.8f);
     }
 
     /// <summary>
