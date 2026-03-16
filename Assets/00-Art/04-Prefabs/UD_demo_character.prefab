@@ -767,8 +767,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animation
   enemyScriptableObject: {fileID: 11400000, guid: 7ead63eff17364747bb8f9f81399ec05, type: 2}
-  hp: 10
+  hp: 100
   damage: 10
+  isAimed: 0
 --- !u!1 &165938
 GameObject:
   m_ObjectHideFlags: 0

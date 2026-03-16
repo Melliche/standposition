@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class SkeletonBehaviour : MonoBehaviour
 {
@@ -11,8 +12,12 @@ public class SkeletonBehaviour : MonoBehaviour
     public EnemyScriptableObject enemyScriptableObject;
     public float hp;
     public float damage;
+    public static List<GameObject> AllEnemies = new List<GameObject>();
+    public bool isAimed;
     void Start()
     {
+        hp = enemyScriptableObject.health;
+        damage = enemyScriptableObject.damage;
         agent = GetComponent<NavMeshAgent>();
 
         cible = GameObject.Find("Tower");
@@ -25,7 +30,8 @@ public class SkeletonBehaviour : MonoBehaviour
 
     void MoveToPoint()
     {
-        bool pathFound = agent.SetDestination(cible.transform.position);
+        GameObject hb = towerStats.hitBox;
+        bool pathFound = agent.SetDestination(hb.transform.position);
     }
 
     void AttackTower()
@@ -66,5 +72,13 @@ public class SkeletonBehaviour : MonoBehaviour
             //Debug.Log("Mort !!");
             Destroy(this.gameObject);
         }
+    }
+
+    void OnEnable() {
+        AllEnemies.Add(this.gameObject);
+    }
+
+    void OnDisable() {
+        AllEnemies.Remove(this.gameObject);
     }
 }

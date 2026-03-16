@@ -89,23 +89,17 @@ public class TowerWeaponsController : MonoBehaviour
     /// <returns></returns>
     private GameObject GetClosestEnemy(float range)
     {
+
         // Récupère tous les ennemis présents dans la scène
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject closestEnemy = null;
-        float shortestDistance = Mathf.Infinity;
-        Vector3 currentPosition = transform.position;
-
-        foreach (GameObject enemy in enemies)
+         foreach (GameObject enemy in SkeletonBehaviour.AllEnemies) 
         {
-            float distanceToEnemy = Vector3.Distance(currentPosition, enemy.transform.position);
-
-            if (distanceToEnemy < shortestDistance && distanceToEnemy <= range)
+            SkeletonBehaviour skeleton = enemy.GetComponent<SkeletonBehaviour>();
+            if (!skeleton.isAimed)
             {
-                shortestDistance = distanceToEnemy;
-                closestEnemy = enemy;
-            }
+                skeleton.isAimed = true;
+                return enemy;
+            }            
         }
-
-        return closestEnemy;
+        return null;
     }
 }

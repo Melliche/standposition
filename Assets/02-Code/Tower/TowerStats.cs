@@ -11,6 +11,8 @@ public class TowerStats : MonoBehaviour
     [SerializeField] private TowerMainStatsUI towerMainStatsUI;
 
     [SerializeField] private float attackRangeDebug = 15f;
+
+    public GameObject hitBox;
     
     private void Awake()
     {
