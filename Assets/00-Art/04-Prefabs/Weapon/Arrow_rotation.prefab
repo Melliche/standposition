@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4465690324101504016}
   - component: {fileID: 5982990580942362466}
+  - component: {fileID: 2520308977131991538}
   m_Layer: 0
   m_Name: Arrow_rotation
   m_TagString: Untagged
@@ -40,12 +41,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6609571754219282361}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be8b657993071ea498635bb7a49dc34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arrow
   speed: 10
+--- !u!114 &2520308977131991538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6609571754219282361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092e7f0a4f63045f0845a4259d1324cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Projectile
 --- !u!1001 &7800213623051072111
 PrefabInstance:
   m_ObjectHideFlags: 0

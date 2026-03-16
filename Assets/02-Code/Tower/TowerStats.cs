@@ -6,17 +6,12 @@ public class TowerStats : MonoBehaviour
     [SerializeField] private float hp;
     [SerializeField] private int armor;
     [SerializeField] private int regen;
-    [SerializeField] private float attackSpeed;
+    [SerializeField] private float attackSpeed = 1f;
+    [SerializeField] private float damageMultiplier = 1f;
     [SerializeField] private TowerMainStatsUI towerMainStatsUI;
 
-    [Header("Combat Stats")]
-    [SerializeField] private float attackRange = 15f;
-    [SerializeField] private int attackDamage = 25;
-
-    [Header("Projectile System")]
-    [SerializeField] private GameObject projectilePrefab; 
-    [SerializeField] private Transform firePoint;
-
+    [SerializeField] private float attackRangeDebug = 15f;
+    
     private void Awake()
     {
         hp = maxHp;
@@ -25,7 +20,6 @@ public class TowerStats : MonoBehaviour
     void Start()
     {
         InvokeRepeating(nameof(RegenHp), 0, 1);
-        InvokeRepeating(nameof(Attack), 0, attackSpeed);
     }
 
     /// <summary>
@@ -69,6 +63,12 @@ public class TowerStats : MonoBehaviour
         UpdateMainStatsUI();
     }
 
+    public void MultiplyDamage(float multiplier)
+    {
+        damageMultiplier *= multiplier;
+        UpdateMainStatsUI();
+    }
+    
     private void UpdateMainStatsUI()
     {
         if (towerMainStatsUI)
@@ -79,51 +79,30 @@ public class TowerStats : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        //Debug.Log("La tour a subi " + amount + " dégâts ! PV restants : " + hp);
-        hp -= amount;
-        if(hp <= 0)
+        float finalDamage = Mathf.Max(1, amount - armor);
+        hp -= finalDamage;
+        
+        if (hp <= 0)
         {
             Destroy(gameObject);
         }
+
+        UpdateMainStatsUI();
     }
 
-
-    private GameObject GetClosestEnemy()
+    public int GetFinalDamage(int baseDamage)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject closestEnemy = null;
-        float shortestDistance = Mathf.Infinity; 
-        Vector3 currentPosition = transform.position;
-
-        foreach (GameObject enemy in enemies)
-        {
-            float distanceToEnemy = Vector3.Distance(currentPosition, enemy.transform.position);
-
-            if (distanceToEnemy < shortestDistance && distanceToEnemy <= attackRange)
-            {
-                shortestDistance = distanceToEnemy;
-                closestEnemy = enemy;
-            }
-        }
-
-        return closestEnemy;
+        return Mathf.RoundToInt(baseDamage * damageMultiplier);
     }
 
-    private void Attack()
+    public float GetFinalAttacksPerSecond(float baseAttacksPerSecond)
     {
-        GameObject target = GetClosestEnemy();
-        GameObject projGO = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-
-        Arrow projectile = projGO.GetComponent<Arrow>();
-        if (projectile != null)
-        {
-            projectile.Seek(target.transform, attackDamage);
-        }
+        return baseAttacksPerSecond * attackSpeed;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, attackRangeDebug);
     }
 }

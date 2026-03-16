@@ -10,7 +10,12 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private ShopUI shopUI;
     [SerializeField] private int visibleCount = 8;
     [SerializeField] private int refreshSeconds = 30;
-
+    [SerializeField] private TowerWeaponsController towerWeaponsController;
+    [SerializeField] private WeaponData arrowWeaponData;
+    [SerializeField] private WeaponData axeWeaponData;
+    [SerializeField] private WeaponData fireballWeaponData;
+    [SerializeField] private WeaponData rockWeaponData;
+    
     private List<ShopItem> shopItems;
     private List<ShopItem> visibleShopItems;
     private float refreshTimer;
@@ -74,6 +79,20 @@ public class ShopManager : MonoBehaviour
     /// <param name="item">L'item qui vient d'être débloqué</param>
     private void ApplyUpgrade(ShopItem item)
     {
+        switch (item.itemType)
+        {
+            case ShopItemType.StatUpgrade:
+                ApplyStatUpgrade(item);
+                break;
+
+            case ShopItemType.Weapon:
+                towerWeaponsController.AddWeapon(item.weaponData);
+                break;
+        }
+    }
+
+    private void ApplyStatUpgrade(ShopItem item)
+    {
         switch (item.upgradeType)
         {
             case UpgradeType.MaxHp:
@@ -91,6 +110,9 @@ public class ShopManager : MonoBehaviour
             case UpgradeType.Income:
                 economy.PassiveIncome += item.intValue;
                 break;
+            case UpgradeType.Damage:
+                tower.MultiplyDamage(item.floatValue);
+                break;
         }
     }
 
@@ -102,79 +124,120 @@ public class ShopManager : MonoBehaviour
             new ShopItem
             {
                 name = "Upgrade Max HP", description = "Augmente les points de vie maximum de la tour de 500.",
-                cost = 100, upgradeType = UpgradeType.MaxHp, intValue = 500
+                cost = 100, upgradeType = UpgradeType.MaxHp, intValue = 500, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Armor", description = "Augmente l'armure de la tour de 10.", cost = 150,
-                upgradeType = UpgradeType.Armor, intValue = 10
+                upgradeType = UpgradeType.Armor, intValue = 10, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Regen", description = "Augmente la régénération de la tour de 5 points par seconde.",
-                cost = 200, upgradeType = UpgradeType.Regen, intValue = 5
+                cost = 200, upgradeType = UpgradeType.Regen, intValue = 5, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Attack Speed", description = "Augmente la vitesse d'attaque de la tour de  5 %",
-                cost = 250, upgradeType = UpgradeType.AttackSpeed, floatValue = 1.05f
+                cost = 250, upgradeType = UpgradeType.AttackSpeed, floatValue = 1.05f, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Max HP", description = "Augmente les points de vie maximum de la tour de 1000.",
-                cost = 200, upgradeType = UpgradeType.MaxHp, intValue = 1000
+                cost = 200, upgradeType = UpgradeType.MaxHp, intValue = 1000, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Armor", description = "Augmente l'armure de la tour de 20.", cost = 300,
-                upgradeType = UpgradeType.Armor, intValue = 20
+                upgradeType = UpgradeType.Armor, intValue = 20, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Regen", description = "Augmente la régénération de la tour de 10 points par seconde.",
-                cost = 400, upgradeType = UpgradeType.Regen, intValue = 10
+                cost = 400, upgradeType = UpgradeType.Regen, intValue = 10, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Attack Speed", description = "Augmente la vitesse d'attaque de la tour de  10 %",
-                cost = 500, upgradeType = UpgradeType.AttackSpeed, floatValue = 1.10f
+                cost = 500, upgradeType = UpgradeType.AttackSpeed, floatValue = 1.10f, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Max HP", description = "Augmente les points de vie maximum de la tour de 2000.",
-                cost = 400, upgradeType = UpgradeType.MaxHp, intValue = 2000
+                cost = 400, upgradeType = UpgradeType.MaxHp, intValue = 2000, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Armor", description = "Augmente l'armure de la tour de 50.", cost = 500,
-                upgradeType = UpgradeType.Armor, intValue = 50
+                upgradeType = UpgradeType.Armor, intValue = 50, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Regen", description = "Augmente la régénération de la tour de 20 points par seconde.",
-                cost = 800, upgradeType = UpgradeType.Regen, intValue = 20
+                cost = 800, upgradeType = UpgradeType.Regen, intValue = 20, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Attack Speed", description = "Augmente la vitesse d'attaque de la tour de 20 %",
-                cost = 1000, upgradeType = UpgradeType.AttackSpeed, floatValue = 1.20f
+                cost = 1000, upgradeType = UpgradeType.AttackSpeed, floatValue = 1.20f, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Income", description = "Augmente les revenus passifs de 50 or par seconde.", cost = 300,
-                upgradeType = UpgradeType.Income, intValue = 50
+                upgradeType = UpgradeType.Income, intValue = 50, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Income", description = "Augmente les revenus passifs de 100 or par seconde.",
                 cost = 600,
-                upgradeType = UpgradeType.Income, intValue = 100
+                upgradeType = UpgradeType.Income, intValue = 100, itemType = ShopItemType.StatUpgrade
             },
             new ShopItem
             {
                 name = "Upgrade Income", description = "Augmente les revenus passifs de 200 or par seconde.",
                 cost = 1200,
-                upgradeType = UpgradeType.Income, intValue = 200
+                upgradeType = UpgradeType.Income, intValue = 200, itemType = ShopItemType.StatUpgrade
+            },
+            new ShopItem
+            {
+                name = "Upgrade Damage +5%",
+                description = "Augmente les dégâts de toutes les armes de 5%.",
+                cost = 250,
+                itemType = ShopItemType.StatUpgrade,
+                upgradeType = UpgradeType.Damage,
+                floatValue = 1.05f
+            },
+            new ShopItem
+            {
+                name = "Arc",
+                description = "Ajoute une arme qui tire des flèches.",
+                cost = 150,
+                itemType = ShopItemType.Weapon,
+                weaponData = arrowWeaponData
+            },
+            new ShopItem
+            {
+                name = "Hache lancée",
+                description = "Ajoute une arme qui lance des haches.",
+                cost = 250,
+                itemType = ShopItemType.Weapon,
+                weaponData = axeWeaponData
+            },
+            new ShopItem
+            {
+                name = "Boule de feu",
+                description = "Ajoute une arme magique à distance.",
+                cost = 400,
+                itemType = ShopItemType.Weapon,
+                weaponData = fireballWeaponData
+            },
+            new ShopItem
+            {
+                name = "Caillou",
+                description = "Ajoute une arme faible mais bon marché.",
+                cost = 50,
+                itemType = ShopItemType.Weapon,
+                weaponData = rockWeaponData
             }
         };
     }

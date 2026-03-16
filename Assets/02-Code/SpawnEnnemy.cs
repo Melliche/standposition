@@ -42,7 +42,7 @@ public class SpawnEnnemy : MonoBehaviour
         spawnPosition = GameObject.FindGameObjectsWithTag("Spawn");
         InvokeRepeating("SpawEnnemy", 0f, spawnRate);
         InvokeRepeating("NextWave", 10f, 10f);
-        Invoke("StopSpawn", 60.0f);
+        Invoke("StopSpawn", 1000.0f);
     }
     public void SpawEnnemy()
     {

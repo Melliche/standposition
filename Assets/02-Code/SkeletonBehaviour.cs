@@ -1,7 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
 public class SkeletonBehaviour : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class SkeletonBehaviour : MonoBehaviour
     private NavMeshAgent agent;
     private TowerStats towerStats;
 
-     public EnemyScriptableObject enemyScriptableObject;
+    public EnemyScriptableObject enemyScriptableObject;
     public float hp;
     public float damage;
     void Start()
@@ -28,12 +26,6 @@ public class SkeletonBehaviour : MonoBehaviour
     void MoveToPoint()
     {
         bool pathFound = agent.SetDestination(cible.transform.position);
-    }
-
-    void Update()
-    {
-            
-    
     }
 
     void AttackTower()

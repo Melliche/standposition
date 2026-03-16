@@ -16,6 +16,14 @@ public class ShopItem
     public string description;
     public int cost;
     public UpgradeType upgradeType;
+    public ShopItemType itemType;
     public int intValue;
     public float floatValue;
+    public WeaponData weaponData;
+}
+
+public enum ShopItemType
+{
+    StatUpgrade,
+    Weapon
 }
