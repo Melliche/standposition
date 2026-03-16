@@ -9,9 +9,23 @@ public class TowerStats : MonoBehaviour
     [SerializeField] private float attackSpeed;
     [SerializeField] private TowerMainStatsUI towerMainStatsUI;
 
-    protected void Start()
+    [Header("Combat Stats")]
+    [SerializeField] private float attackRange = 15f;
+    [SerializeField] private int attackDamage = 25;
+
+    [Header("Projectile System")]
+    [SerializeField] private GameObject projectilePrefab; 
+    [SerializeField] private Transform firePoint;
+
+    private void Awake()
+    {
+        hp = maxHp;
+    }
+
+    void Start()
     {
         InvokeRepeating(nameof(RegenHp), 0, 1);
+        InvokeRepeating(nameof(Attack), 0, attackSpeed);
     }
 
     /// <summary>
@@ -61,5 +75,56 @@ public class TowerStats : MonoBehaviour
         {
             towerMainStatsUI.SetData(hp, maxHp, armor, regen, attackSpeed);
         }
+    }
+
+    public void TakeDamage(int amount)
+    {
+        hp -= amount;
+        Debug.Log("La tour a subi " + amount + " dégâts ! PV restants : " + hp);
+        hp -= amount;
+        if(hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+    private GameObject GetClosestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject closestEnemy = null;
+        float shortestDistance = Mathf.Infinity; 
+        Vector3 currentPosition = transform.position;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float distanceToEnemy = Vector3.Distance(currentPosition, enemy.transform.position);
+
+            if (distanceToEnemy < shortestDistance && distanceToEnemy <= attackRange)
+            {
+                shortestDistance = distanceToEnemy;
+                closestEnemy = enemy;
+            }
+        }
+
+        return closestEnemy;
+    }
+
+    private void Attack()
+    {
+        GameObject target = GetClosestEnemy();
+        GameObject projGO = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+        Arrow projectile = projGO.GetComponent<Arrow>();
+        if (projectile != null)
+        {
+            projectile.Seek(target.transform, attackDamage);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }
