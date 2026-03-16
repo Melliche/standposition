@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce580f1aca34eba95db936f42aadfff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopManager
-  tower: {fileID: 1355870910584957948, guid: fdcb8f82d3de61d42a72267864c8b0e5, type: 3}
+  tower: {fileID: 0}
   economy: {fileID: 0}
   shopUI: {fileID: 0}
   visibleCount: 8
