@@ -28,7 +28,7 @@ namespace ithappy
             }
             else
             {
-                Debug.LogError("SkinnedMeshRenderer not found on the GameObject or its children.");
+                //Debug.LogError("SkinnedMeshRenderer not found on the GameObject or its children.");
             }
         }
 

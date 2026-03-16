@@ -8,7 +8,7 @@ public class TowerMainStatsUI : MonoBehaviour
     [SerializeField] private TMP_Text regenText;
     [SerializeField] private TMP_Text attackSpeedText;
 
-    public void SetData(int hp, int maxHp, int armor, float regen, float attackSpeed)
+    public void SetData(float hp, float maxHp, int armor, float regen, float attackSpeed)
     {
         float bonus = (attackSpeed - 1f) * 100f;
 

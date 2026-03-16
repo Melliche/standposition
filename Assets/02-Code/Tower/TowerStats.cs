@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TowerStats : MonoBehaviour
 {
-    [SerializeField] private int maxHp;
-    [SerializeField] private int hp;
+    [SerializeField] private float maxHp;
+    [SerializeField] private float hp;
     [SerializeField] private int armor;
     [SerializeField] private int regen;
     [SerializeField] private float attackSpeed;
@@ -77,10 +77,9 @@ public class TowerStats : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
-        hp -= amount;
-        Debug.Log("La tour a subi " + amount + " dégâts ! PV restants : " + hp);
+        //Debug.Log("La tour a subi " + amount + " dégâts ! PV restants : " + hp);
         hp -= amount;
         if(hp <= 0)
         {
