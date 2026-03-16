@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6713c8c7d082631459e0831a29de5538, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyScriptableObject
-  health: 10
+  health: 20
   damage: 10
