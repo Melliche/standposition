@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TowerWeaponsController : MonoBehaviour
@@ -12,7 +13,6 @@ public class TowerWeaponsController : MonoBehaviour
     {
         for (int i = 0; i < ownedWeapons.Count; i++)
         {
-            // S'il y a une arme, on met à jour son cooldown, cherche une cible et tire si possible
             UpdateWeapon(ownedWeapons[i]);
         }
     }
@@ -49,9 +49,19 @@ public class TowerWeaponsController : MonoBehaviour
             weaponInstance.cooldownRemaining -= Time.deltaTime;
             if (weaponInstance.cooldownRemaining <= 0)
             {
-                GameObject target = GetClosestEnemy(weaponInstance.weaponData.attackRange);
+                GameObject target = null;
+                if(weaponInstance.cible == null)
+                
+                {
+                    target = GetClosestEnemy(weaponInstance.weaponData.attackRange);
+                }
+                else
+                {
+                   target = weaponInstance.cible;
+                }
                 if (target)
                 {
+                    weaponInstance.cible = target;
                     // Tire sur la cible
                     FireWeapon(weaponInstance, target);
 
@@ -85,7 +95,7 @@ public class TowerWeaponsController : MonoBehaviour
             {
                 // Calcule les dégâts finaux
                 int finalDamage = towerStats.GetFinalDamage(data.baseDamage);
-                projectile.Initialize(target.transform, finalDamage, data.projectileSpeed);
+                projectile.Initialize(target.transform, finalDamage, data.projectileSpeed, weaponInstance);
             }
         }
     }
@@ -97,15 +107,18 @@ public class TowerWeaponsController : MonoBehaviour
     /// <returns></returns>
     private GameObject GetClosestEnemy(float range)
     {
+
+        float shortestDistance = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
         // Récupère tous les ennemis présents dans la scène
-        foreach (GameObject enemy in SkeletonBehaviour.AllEnemies)
+         foreach (SkeletonBehaviour skeleton in SpawnEnnemy.AllEnemies) 
         {
-            SkeletonBehaviour skeleton = enemy.GetComponent<SkeletonBehaviour>();
-            if (!skeleton.isAimed)
+            float distanceToEnemy = Vector3.Distance(currentPosition, skeleton.transform.position);
+            if (!skeleton.isAimed && distanceToEnemy < shortestDistance && distanceToEnemy <= range)
             {
                 skeleton.isAimed = true;
-                return enemy;
-            }
+                return skeleton.gameObject;
+            }            
         }
 
         return null;

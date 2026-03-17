@@ -6,14 +6,16 @@ public class Projectile : MonoBehaviour
     private int damage;
     private float speed;
     private Vector3 lastDirection;
+    public TowerWeaponInstance weapon;
 
     [SerializeField] private float lifeTime = 3f;
 
-    public void Initialize(Transform newTarget, int newDamage, float newSpeed)
+    public void Initialize(Transform newTarget, int newDamage, float newSpeed, TowerWeaponInstance newWeapon)
     {
         target = newTarget;
         damage = newDamage;
         speed = newSpeed;
+        weapon = newWeapon;
 
         if (target)
         {
@@ -33,7 +35,6 @@ public class Projectile : MonoBehaviour
 
         if (target)
         {
-            // Calcule la direction vers la cible
             Vector3 direction = target.position - transform.position;
 
             if (direction.magnitude <= distanceThisFrame)
@@ -49,7 +50,6 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            // Si pas de direction, le projectile continue dans la dernière direction connue
             transform.position += lastDirection * distanceThisFrame;
         }
     }
