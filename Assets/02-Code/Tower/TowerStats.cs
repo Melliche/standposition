@@ -9,7 +9,7 @@ public class TowerStats : MonoBehaviour
     [SerializeField] private float attackSpeed = 1f;
     [SerializeField] private float damageMultiplier = 1f;
     [SerializeField] private TowerMainStatsUI towerMainStatsUI;
-
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private float attackRangeDebug = 15f;
     
     private void Awake()
@@ -85,6 +85,10 @@ public class TowerStats : MonoBehaviour
         if (hp <= 0)
         {
             Destroy(gameObject);
+            if (gameManager)
+            {
+                gameManager.GameOver();
+            }
         }
 
         UpdateMainStatsUI();
