@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class SpawnEnnemy : MonoBehaviour
@@ -91,9 +88,5 @@ public class SpawnEnnemy : MonoBehaviour
         spawnRate = Mathf.Max(0.2f, spawnRate - 0.2f);
         CancelInvoke(nameof(SpawEnnemy));
         InvokeRepeating(nameof(SpawEnnemy), 0f, spawnRate);
-    }
-    void Update()
-    {
-        
     }
 }

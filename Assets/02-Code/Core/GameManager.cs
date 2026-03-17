@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text gameTimer;
     [SerializeField] private TMP_Text gameOverText;
     [SerializeField] private int SECOND_GAME_DURATION = 600;
+    [SerializeField] private GameObject canvaMenu;
 
     private float elapsedTime = 0f;
     private int lastDisplayedSecond = -1;
