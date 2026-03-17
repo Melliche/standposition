@@ -17,5 +17,5 @@ MonoBehaviour:
   attackRange: 15
   baseDamage: 25
   attacksPerSecond: 1
-  projectilePrefab: {fileID: 6609571754219282361, guid: 0ccd462ba3867354a8f8960d8882888a, type: 3}
+  projectilePrefab: {fileID: 1776472905282870, guid: 1fa34df54f1414448b502a85dfa4a95c, type: 3}
   projectileSpeed: 12
