@@ -11,9 +11,11 @@ public class TowerStats : MonoBehaviour
     [SerializeField] private TowerMainStatsUI towerMainStatsUI;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private float attackRangeDebug = 15f;
+    [SerializeField] private WeaponStatsUI weaponStatsUI;
+    [SerializeField] private TowerWeaponsController towerWeaponsController;
 
     public GameObject hitBox;
-    
+
     private void Awake()
     {
         hp = maxHp;
@@ -22,6 +24,7 @@ public class TowerStats : MonoBehaviour
     void Start()
     {
         InvokeRepeating(nameof(RegenHp), 0, 1);
+        UpdateWeaponStatsUI();
     }
 
     /// <summary>
@@ -69,8 +72,9 @@ public class TowerStats : MonoBehaviour
     {
         damageMultiplier *= multiplier;
         UpdateMainStatsUI();
+        UpdateWeaponStatsUI();
     }
-    
+
     private void UpdateMainStatsUI()
     {
         if (towerMainStatsUI)
@@ -79,11 +83,19 @@ public class TowerStats : MonoBehaviour
         }
     }
 
+    public void UpdateWeaponStatsUI()
+    {
+        if (weaponStatsUI && towerWeaponsController)
+        {
+            weaponStatsUI.UpdateStats(this, towerWeaponsController);
+        }
+    }
+
     public void TakeDamage(float amount)
     {
         float finalDamage = Mathf.Max(1, amount - armor);
         hp -= finalDamage;
-        
+
         if (hp <= 0)
         {
             Destroy(gameObject);

@@ -4,16 +4,18 @@ using System.Collections.Generic;
 
 public class SkeletonBehaviour : MonoBehaviour
 {
-    // Glissez ici un objet (ex: un Cube) qui servira de destination visuelle
     private GameObject cible;
     private NavMeshAgent agent;
     private TowerStats towerStats;
+    private Economy economy;
+    private GameObject gameRoot;
 
     public EnemyScriptableObject enemyScriptableObject;
     public float hp;
     public float damage;
     public static List<GameObject> AllEnemies = new List<GameObject>();
     public bool isAimed;
+
     void Start()
     {
         hp = enemyScriptableObject.health;
@@ -22,9 +24,11 @@ public class SkeletonBehaviour : MonoBehaviour
 
         cible = GameObject.Find("Tower");
         towerStats = cible.GetComponent<TowerStats>();
+        gameRoot = GameObject.Find("GameRoot");
+        economy = gameRoot.GetComponent<Economy>();
 
-        agent.isStopped = false; 
-        
+        agent.isStopped = false;
+
         MoveToPoint();
     }
 
@@ -56,7 +60,6 @@ public class SkeletonBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Tower"))
         {
-            
             GetComponent<UnityEngine.AI.NavMeshAgent>().isStopped = true;
             GetComponent<Animator>().SetBool("Attack", true);
         }
@@ -64,21 +67,34 @@ public class SkeletonBehaviour : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        //Debug.Log("Before :" + hp);
         hp -= damage;
-        //Debug.Log("After :" + hp);
-        if(hp <= 0)
+        if (hp <= 0)
         {
-            //Debug.Log("Mort !!");
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
-    void OnEnable() {
-        AllEnemies.Add(this.gameObject);
+    void OnEnable()
+    {
+        AllEnemies.Add(gameObject);
     }
 
-    void OnDisable() {
-        AllEnemies.Remove(this.gameObject);
+    void OnDisable()
+    {
+        AllEnemies.Remove(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (economy)
+        {
+            // Ajoute l'or de récompense de kill à l'économie du joueur
+            economy.AddGold(economy.KillIncome);
+            ShopUI shop = economy.GetComponent<ShopUI>();
+            if (shop)
+            {
+                shop.UpdateHeader(economy.Gold);
+            }
+        }
     }
 }

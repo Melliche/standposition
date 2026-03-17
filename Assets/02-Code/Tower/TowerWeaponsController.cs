@@ -17,6 +17,10 @@ public class TowerWeaponsController : MonoBehaviour
         }
     }
 
+    public List<TowerWeaponInstance> getOwnedWeapons()
+    {
+        return ownedWeapons;
+    }
 
     /// <summary>
     /// Ajoute une nouvelle arme à la tour.
@@ -27,6 +31,10 @@ public class TowerWeaponsController : MonoBehaviour
         if (weaponData)
         {
             ownedWeapons.Add(new TowerWeaponInstance(weaponData));
+            if (towerStats)
+            {
+                towerStats.UpdateWeaponStatsUI();
+            }
         }
     }
 
@@ -89,17 +97,30 @@ public class TowerWeaponsController : MonoBehaviour
     /// <returns></returns>
     private GameObject GetClosestEnemy(float range)
     {
-
         // Récupère tous les ennemis présents dans la scène
-         foreach (GameObject enemy in SkeletonBehaviour.AllEnemies) 
+        foreach (GameObject enemy in SkeletonBehaviour.AllEnemies)
         {
             SkeletonBehaviour skeleton = enemy.GetComponent<SkeletonBehaviour>();
             if (!skeleton.isAimed)
             {
                 skeleton.isAimed = true;
                 return enemy;
-            }            
+            }
         }
+
         return null;
+    }
+
+
+    /// <summary>
+    /// Détruit tous les ennemis présents dans la scène et les détruit.
+    /// </summary>
+    public void Joker()
+    {
+         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+         foreach (GameObject enemy in enemies)
+         {
+             Destroy(enemy);
+         }
     }
 }
