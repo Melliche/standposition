@@ -13,7 +13,6 @@ public class SpawnEnnemy : MonoBehaviour
         public int count;
     }
 
-    // 2. Structure pour créer de vraies vagues dans l'Inspecteur
     [System.Serializable]
     public struct WaveConfig
     {

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weaponName: Rock
   description: 
-  attackRange: 15
-  baseDamage: 200
+  attackRange: 10
+  baseDamage: 40
   attacksPerSecond: 0.4
   projectilePrefab: {fileID: 8267250168425071068, guid: 2e674a977eb39b44c8f0c3388def7a8b, type: 3}
   projectileSpeed: 10

@@ -13,7 +13,6 @@ public class TowerWeaponsController : MonoBehaviour
     {
         for (int i = 0; i < ownedWeapons.Count; i++)
         {
-            // S'il y a une arme, on met à jour son cooldown, cherche une cible et tire si possible
             UpdateWeapon(ownedWeapons[i]);
         }
     }

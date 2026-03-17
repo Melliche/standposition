@@ -8,7 +8,7 @@ public class Economy : MonoBehaviour
 
     public int Gold { get; private set; }
     public int PassiveIncome { get; set; } = 10;
-    public int KillIncome { get; private set; } = 1;
+    public int KillIncome { get; private set; } = 5;
 
     void Awake()
     {
